@@ -1,8 +1,8 @@
 [![Build Status](https://circleci.com/gh/segmentio/integration-webhooks/tree/master.png?style=badge)](https://circleci.com/gh/segmentio/integration-webhooks/tree/master)
 
-# integration-webhooks
+# integration-trayio
 
-Webhooks server-side integration for Segment.
+tray.io server-side integration for Segment.
 
 ## License
 
