@@ -1,0 +1,28 @@
+{
+  "input": {
+    "type": "track",
+    "userId": "user-id",
+    "event": "my-event",
+    "timestamp": "2014",
+    "properties": {
+      "revenue": 19.99,
+      "property": true
+    },
+    "context": {
+      "ip": "10.0.0.1"
+    }
+  },
+  "output": {
+    "type": "track",
+    "userId": "user-id",
+    "event": "my-event",
+    "timestamp": "2014-01-01T00:00:00.000Z",
+    "properties": {
+      "revenue": 19.99,
+      "property": true
+    },
+    "context": {
+      "ip": "10.0.0.1"
+    }
+  }
+}

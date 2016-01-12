@@ -1,0 +1,30 @@
+{
+  "input": {
+    "type": "group",
+    "userId": "user-id",
+    "groupId": "group-id",
+    "timestamp": "2014",
+    "traits": {
+      "avatar": "segment.jpg",
+      "name": "Segment",
+      "email": "friends@segment.io"
+    },
+    "context": {
+      "ip": "10.0.0.1"
+    }
+  },
+  "output": {
+    "type": "group",
+    "userId": "user-id",
+    "groupId": "group-id",
+    "timestamp": "2014-01-01T00:00:00.000Z",
+    "traits": {
+      "avatar": "segment.jpg",
+      "name": "Segment",
+      "email": "friends@segment.io"
+    },
+    "context": {
+      "ip": "10.0.0.1"
+    }
+  }
+}
