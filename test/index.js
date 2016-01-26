@@ -50,6 +50,20 @@ describe('Tray', function(){
         json = test.fixture(type + '-basic');
       });
 
+      it('should have a real, living API endpoint (a health check workflow)', function (done) {
+        var data = 
+          test
+          .set({
+            workflows: [
+              'https://507f1352-cbc7-4abb-8dd2-538d3c09787d.trayapp.io'
+            ]
+          })
+          [type](json.input)
+          .expects(200)
+          .end(done);
+      });
+
+
       it('should succeed on valid call', function(done){
         var route = '/' + type + '/success';
         settings.workflows = settings.workflows.map(function(workflow){
