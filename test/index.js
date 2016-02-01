@@ -90,7 +90,7 @@ describe('Tray', function(){
         var route2 = 'http://localhost:4000' + path2;
 
         // route1 is explicitly twice to test when there is a bad workflow.
-        settings.workflows = [route1, route2, route1];
+        settings.workflows = [route1, route2, route1, 'https://507f1352-cbc7-4abb-8dd2-538d3c09787d.trayapp.io'];
 
         app.post(path1, function(req, res){
           assert.deepEqual(req.body, json.output);
@@ -103,7 +103,7 @@ describe('Tray', function(){
 
         test
           .set(settings)
-          .requests(3)
+          .requests(4)
           [type](json.input);
 
         test
@@ -125,12 +125,7 @@ describe('Tray', function(){
         var path = '/' + type + '/success';
         var route = 'http://localhost:4000' + path;
 
-        settings.workflows = [route];
-
-        app.post(path, function(req, res){
-          assert.deepEqual(req.body, json.output);
-          res.send(200);
-        });
+        settings.workflows = ['https://507f1352-cbc7-4abb-8dd2-538d3c09787d.trayapp.io'];
 
         test
           .set(settings)
@@ -144,7 +139,7 @@ describe('Tray', function(){
         var path = '/' + type + '/success';
         var route = 'http://localhost:4000' + path;
 
-        settings.workflows = [route, route, route, route, route, route, route, route, route, route, route, route];
+        settings.workflows = ['https://507f1352-cbc7-4abb-8dd2-538d3c09787d.trayapp.io', route, route, route, route, route, route, route, route, route, route, route, route];
 
         app.post(path, function(req, res){
           assert.deepEqual(req.body, json.output);
@@ -166,7 +161,7 @@ describe('Tray', function(){
         var route1 = 'http://localhost:4000' + path1;
         var route2 = 'http://localhost:4000' + path2;
 
-        settings.workflows = [route1, route2];
+        settings.workflows = ['https://507f1352-cbc7-4abb-8dd2-538d3c09787d-12321312.trayapp.io', route1, route2];
 
         app.post(path2, function(req, res){
           assert.deepEqual(req.body, json.output);
@@ -190,15 +185,7 @@ describe('Tray', function(){
       });
 
       it('should error on invalid calls', function(done){
-        var route = '/' + type + '/error';
-        settings.workflows = settings.workflows.map(function(workflow){
-           return workflow + route;
-        });
-
-        app.post(route, function(req, res){
-          assert.deepEqual(req.body, json.output);
-          res.send(503);
-        });
+        settings.workflows = ['https://507f1352-cbc7-4abb-8dd2-538d3c09787d-123-1231-123.trayapp.io']
 
         test
           .set(settings)
