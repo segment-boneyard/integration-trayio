@@ -1,4 +1,5 @@
-[![Build Status](https://circleci.com/gh/segmentio/integration-webhooks/tree/master.png?style=badge)](https://circleci.com/gh/segmentio/integration-webhooks/tree/master)
+
+[![Build Status](https://circleci.com/gh/segmentio/integration-trayio/tree/master.png?style=badge)](https://circleci.com/gh/segmentio/integration-trayio/tree/master)
 
 # integration-trayio
 

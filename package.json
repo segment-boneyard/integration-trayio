@@ -1,12 +1,12 @@
 {
-  "name": "integration-webhooks",
-  "version": "2.0.4",
+  "name": "integration-trayio",
+  "version": "1.0.0",
   "private": true,
-  "description": "Webhooks server-side integration",
+  "description": "Tray.io server-side integration",
   "author": "Segment <friends@segment.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/segmentio/integration-webhooks"
+    "url": "https://github.com/segmentio/integration-trayio"
   },
   "main": "lib/index.js",
   "scripts": {
