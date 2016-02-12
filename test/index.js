@@ -10,24 +10,12 @@ describe('Tray', function(){
   var types = ['track', 'identify', 'alias', 'group', 'page', 'screen'];
   var tray;
   var settings;
-  var server;
   var test;
-  var app;
-
-  before(function(done){
-    app = express();
-    app.use(express.bodyParser());
-    server = app.listen(4000, done);
-  });
-
-  after(function(done){
-    server.close(done);
-  });
 
   beforeEach(function(){
     settings = {
       workflows: [
-        'http://localhost:4000'
+        'https://dc7f2b63-34f7-4e4e-9359-68bccf1423df.trayapp.io'
       ]
     };
     tray = new Tray(settings);
@@ -50,101 +38,39 @@ describe('Tray', function(){
         json = test.fixture(type + '-basic');
       });
 
-      it('should have a real, living API endpoint (a health check workflow)', function (done) {
+      it('should successfully send to a workflow', function (done) {
         var data = 
-          test
-          .set({
-            workflows: [
-              'https://507f1352-cbc7-4abb-8dd2-538d3c09787d.trayapp.io'
-            ]
-          })
-          [type](json.input)
-          .expects(200)
-          .end(done);
-      });
-
-
-      it('should succeed on valid call', function(done){
-        var route = '/' + type + '/success';
-        settings.workflows = settings.workflows.map(function(workflow){
-           return workflow + route;
-        });
-
-        app.post(route, function(req, res){
-          assert.deepEqual(req.body, json.output);
-          res.send(200);
-        });
-
-        test
-          .set(settings)
-          [type](json.input)
+          test[type](json.input)
           .expects(200)
           .end(done);
       });
 
       it('should send to multiple workflow urls', function(done){
-        var path1 = '/' + type + '/success';
-        var path2 = '/' + type + '/error';
-
-        var route1 = 'http://localhost:4000' + path1;
-        var route2 = 'http://localhost:4000' + path2;
+        var goodUrl = 'https://dc7f2b63-34f7-4e4e-9359-68bccf1423df.trayapp.io'
+        var badUrl = 'https://507f1352-cbc7-4abb-8dd2-538d3c09787d-12321312.trayapp.io';
 
         // route1 is explicitly twice to test when there is a bad workflow.
-        settings.workflows = [route1, route2, route1, 'https://507f1352-cbc7-4abb-8dd2-538d3c09787d.trayapp.io'];
-
-        app.post(path1, function(req, res){
-          assert.deepEqual(req.body, json.output);
-          res.send(200);
-        });
-        app.post(path2, function(req, res){
-          assert.deepEqual(req.body, json.output);
-          res.send(503);
-        });
+        settings.workflows = [badUrl, goodUrl];
 
         test
           .set(settings)
-          .requests(4)
+          .requests(2)
           [type](json.input);
 
         test
           .request(0)
-          .expects(200);
+          .expects(500);
 
         test
           .request(1)
-          .expects(503);
-
-        test
-          .request(2)
           .expects(200);
-
-        test.end(done);
-      });
-
-      it('should send to just the one workflow', function(done){
-        var path = '/' + type + '/success';
-        var route = 'http://localhost:4000' + path;
-
-        settings.workflows = ['https://507f1352-cbc7-4abb-8dd2-538d3c09787d.trayapp.io'];
-
-        test
-          .set(settings)
-          .requests(1)
-          [type](json.input);
 
         test.end(done);
       });
 
       it('should send to max 10 workflows', function(done){
-        var path = '/' + type + '/success';
-        var route = 'http://localhost:4000' + path;
-
-        settings.workflows = ['https://507f1352-cbc7-4abb-8dd2-538d3c09787d.trayapp.io', route, route, route, route, route, route, route, route, route, route, route, route];
-
-        app.post(path, function(req, res){
-          assert.deepEqual(req.body, json.output);
-          res.send(200);
-        });
+        var url = 'https://507f1352-cbc7-4abb-8dd2-538d3c09787d.trayapp.io';
+        settings.workflows = fill(url, 20);
 
         test
           .set(settings)
@@ -155,61 +81,31 @@ describe('Tray', function(){
       });
 
       it('should fail when all workflows are down', function(done){
-        var path1 = '/' + type + '/down'; // not mounted
-        var path2 = '/' + type + '/error';
-
-        var route1 = 'http://localhost:4000' + path1;
-        var route2 = 'http://localhost:4000' + path2;
-
-        settings.workflows = ['https://507f1352-cbc7-4abb-8dd2-538d3c09787d-12321312.trayapp.io', route1, route2];
-
-        app.post(path2, function(req, res){
-          assert.deepEqual(req.body, json.output);
-          res.send(503);
-        });
+        var badUrl = 'https://507f1352-cbc7-4abb-8dd2-538d3c09787d-12321312.trayapp.io';
+        settings.workflows = [badUrl, badUrl, badUrl];
 
         test
           .set(settings)
-          .requests(2)
           [type](json.input);
 
         test
           .request(0)
-          .expects(404);
+          .expects(500);
 
         test
           .request(1)
-          .expects(503);
+          .expects(500);
 
         test.error(done);
       });
 
       it('should error on invalid calls', function(done){
         settings.workflows = ['https://507f1352-cbc7-4abb-8dd2-538d3c09787d-123-1231-123.trayapp.io']
-
         test
           .set(settings)
           [type](json.input)
-          .expects(503)
+          .expects(500)
           .error(done);
-      });
-
-      it('should ignore bad reply', function(done){
-        var route = '/bad';
-        settings.workflows = settings.workflows.map(function(workflow){
-           return workflow + route;
-        });
-
-        app.post(route, function(req, res){
-          res.set('Content-Type', 'application/json');
-          res.send(200, 'I lied, this is not JSON');
-        });
-
-        test
-          .set(settings)
-          [type](json.input)
-          .expects(200)
-          .end(done);
       });
 
       it('should attach an HMAC digest when options.sharedSecret is present', function(done){
@@ -219,27 +115,30 @@ describe('Tray', function(){
         });
         settings.sharedSecret = 'teehee';
 
-        app.post(route, function(req, res){
-          var signature = req.headers['x-signature'];
-          var digest = crypto
-            .createHmac('sha1', settings.sharedSecret)
-            .update(JSON.stringify(req.body))
-            .digest('hex');
-
-          assert(signature);
-          assert(signature === digest);
-
-          res.send(200);
-        });
+        var digest = crypto
+          .createHmac('sha1', settings.sharedSecret)
+          .update(JSON.stringify(json.output))
+          .digest('hex');
 
         test
           .set(settings)
           [type](json.input)
           .expects(200)
-          .end(done);
+          .end(function(err, res){
+            test
+              .request(0)
+              .sends('x-signature', digest);
+            done();
+          });
       });
 
       // TODO: test limit
     });
   });
 });
+
+function fill(item, n){
+  var ret = [];
+  for (var i = 0; i < n; i++) ret.push(item);
+  return ret;
+}
