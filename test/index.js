@@ -6,7 +6,7 @@ var assert = require('assert');
 var crypto = require('crypto');
 var express = require('express');
 
-describe('Tray', function(){
+describe('tray.io', function(){
   var types = ['track', 'identify', 'alias', 'group', 'page', 'screen'];
   var tray;
   var settings;
@@ -24,7 +24,7 @@ describe('Tray', function(){
 
   it('should have the correct settings', function(){
     test
-    .name('Tray')
+    .name('tray.io')
     .channels(['server', 'mobile', 'client'])
     .timeout('5s')
     .retries(5);
