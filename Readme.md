@@ -1,5 +1,4 @@
-
-[![Build Status](https://circleci.com/gh/segmentio/integration-trayio/tree/master.png?style=badge)](https://circleci.com/gh/segmentio/integration-trayio/tree/master)
+[![Circle CI](https://circleci.com/gh/segmentio/integration-trayio.svg?style=svg&circle-token=4f18c5c483970c501e044d6453c089b6c2a41d6d)](https://circleci.com/gh/segmentio/integration-trayio)
 
 # integration-trayio
 
