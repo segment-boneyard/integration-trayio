@@ -30,6 +30,14 @@ describe('tray.io', function(){
     .retries(5);
   });
 
+  it('should be disabled if settings are not an array', function(){
+    test.invalid({}, { workflows: '' });
+  });
+
+  it('should be enabled if settings are an array', function(){
+    test.valid({}, { workflows: [] });
+  });
+
   types.forEach(function(type){
     describe('#' + type, function(){
       var json;
@@ -59,7 +67,7 @@ describe('tray.io', function(){
 
         test
           .request(0)
-          .expects(500);
+          .expects(400);
 
         test
           .request(1)
