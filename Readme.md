@@ -1,8 +1,8 @@
-[![Circle CI](https://circleci.com/gh/segmentio/integration-trayio.svg?style=svg&circle-token=4f18c5c483970c501e044d6453c089b6c2a41d6d)](https://circleci.com/gh/segmentio/integration-trayio)
+[![Circle CI](https://circleci.com/gh/segmentio/integration-tray-io.svg?style=svg&circle-token=4f18c5c483970c501e044d6453c089b6c2a41d6d)](https://circleci.com/gh/segmentio/integration-tray-io)
 
-# integration-trayio
+# integration-tray-io
 
-tray.io server-side integration for Segment.
+Tray.io server-side integration for Segment.
 
 ## License
 
