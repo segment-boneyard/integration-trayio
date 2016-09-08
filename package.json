@@ -1,12 +1,12 @@
 {
-  "name": "integration-trayio",
+  "name": "integration-tray-io",
   "version": "1.0.3",
   "private": true,
   "description": "Tray.io server-side integration",
   "author": "Segment <friends@segment.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/segmentio/integration-trayio"
+    "url": "https://github.com/segmentio/integration-tray-io"
   },
   "main": "lib/index.js",
   "scripts": {
