@@ -24,10 +24,8 @@ describe('tray.io', function(){
 
   it('should have the correct settings', function(){
     test
-    .name('tray.io')
-    .channels(['server', 'mobile', 'client'])
-    .timeout('5s')
-    .retries(5);
+      .name('tray.io')
+      .channels(['server', 'mobile', 'client']);
   });
 
   it('should be disabled if settings are not an array', function(){
@@ -47,14 +45,13 @@ describe('tray.io', function(){
       });
 
       it('should successfully send to a workflow', function (done) {
-        var data = 
-          test[type](json.input)
+        var data = test[type](json.input)
           .expects(200)
           .end(done);
       });
 
       it('should send to multiple workflow urls', function(done){
-        var goodUrl = 'https://dc7f2b63-34f7-4e4e-9359-68bccf1423df.trayapp.io'
+        var goodUrl = 'https://dc7f2b63-34f7-4e4e-9359-68bccf1423df.trayapp.io';
         var badUrl = 'https://507f1352-cbc7-4abb-8dd2-538d3c09787d-12321312.trayapp.io';
 
         // route1 is explicitly twice to test when there is a bad workflow.
