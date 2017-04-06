@@ -24,10 +24,8 @@ describe('tray.io', function(){
 
   it('should have the correct settings', function(){
     test
-    .name('tray.io')
-    .channels(['server', 'mobile', 'client'])
-    .timeout('5s')
-    .retries(5);
+      .name('tray.io')
+      .channels(['server', 'mobile', 'client']);
   });
 
   it('should be disabled if settings are not an array', function(){
