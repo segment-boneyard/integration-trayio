@@ -1,6 +1,6 @@
 {
   "name": "@segment/integration-trayio",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Tray.io server-side integration",
   "author": "Segment <friends@segment.com>",
   "repository": {
